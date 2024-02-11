@@ -56,21 +56,22 @@ def create_contact():
     return f'{sername} {name} {patronymic}: {phone}\n{address}\n\n'
 
 
-
 def add_contact():  
     with open("fonebook.txt", 'a', encoding='utf -8') as file:
         contact_str = create_contact()
         file.write(contact_str)
 
-def print_contacts():
+
+def create_list_contact():
     with open("fonebook.txt", 'r', encoding='utf -8') as file:
         contacts_str = file.read()
-    #print([contacts_str])
-    contacts_list = contacts_str.rstrip().split('\n\n')
+    return contacts_str.rstrip().split('\n\n')
+
+def print_contacts():
+    contacts_list = create_list_contact()
     for n, contact in enumerate(contacts_list, 1):
         print(n, contact)
     
-
 def search_contact():
     print(
         'Возможные варианты поиска:\n'
@@ -98,25 +99,39 @@ def search_contact():
         lst_contact = str_contact.replace(':', '').split()
         if search in lst_contact[i_var]:
             print(str_contact)
- 
+
+
+def copy_contact():
+    contacts_list = create_list_contact()
+    print_contacts()
+    print()
+
+    num_copy_contact = int(input('Введите номер строки для копирования контакта: '))
+    print()
+
+    with open("copy_fonebook.txt", 'a', encoding='utf -8') as file:
+        file.write(contacts_list[num_copy_contact - 1])
+
+
 
 def interface():
     with open("fonebook.txt", 'a', encoding='utf -8'):
         pass
 
 var = 0
-while var != '4':
+while var != '5':
     print(
         'Возможные варианты:\n'
         '1. Добавить контакт\n'
         '2. Вывести на экран\n'
         '3. Поиск контакта\n'
-        '4. Выход'
+        '4. Копировать контакт\n'
+        '5. Выход'
         )
     print()
 
     var = input('Выберите вариант действия: ')
-    while var not in ('1', '2', '3', '4'):
+    while var not in ('1', '2', '3', '4', '5'):
         print('Некорректный ввод!')
         var = input('Выберите вариант действия: ')
     print()
@@ -129,6 +144,8 @@ while var != '4':
         case '3':
             search_contact()
         case '4':
+            copy_contact()
+        case '5':
             print('До свидания!')
 
 
