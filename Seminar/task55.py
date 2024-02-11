@@ -120,6 +120,7 @@ def interface():
 
 var = 0
 while var != '5':
+    print()
     print(
         'Возможные варианты:\n'
         '1. Добавить контакт\n'
